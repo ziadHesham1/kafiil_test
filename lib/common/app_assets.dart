@@ -1,0 +1,22 @@
+// ignore_for_file: non_constant_identifier_names
+
+abstract class AppAssets {
+  static addImage(String name) => 'assets/images/$name';
+  static addIcon(String name) => 'assets/icons/$name';
+
+  //------------------------------- icons ---------------------------------------
+
+  static final String basket_icon = addIcon('basket_icon.png');
+  static final String linkedin_icon = addIcon('linkedin_icon.png');
+  static final String facebook_icon = addIcon('facebook_icon.png');
+  static final String twitter_icon = addIcon('twitter_icon.png');
+
+  //------------------------------- images ---------------------------------------
+
+  static final String login_illustration_image =
+      addImage('login_illustration_image.png');
+  static final String person_illustration_image =
+      addImage('person_illustration_image.png');
+  static final String product_image = addImage('product_image.png');
+  static final String profile_image = addImage('profile_image.png');
+}
