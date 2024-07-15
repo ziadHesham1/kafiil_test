@@ -1,4 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:kafiil_test/common/app_colors.dart';
 
 import 'app_text_field.dart';
@@ -7,7 +9,7 @@ class AppPasswordField extends StatefulWidget {
   final Function(String?)? onSaved;
   final String labelText;
   final String? Function(String?)? validator;
-
+  final TextEditingController? controller;
   final String? initialValue;
   final FocusNode? focusNode;
   final bool filled;
@@ -15,10 +17,11 @@ class AppPasswordField extends StatefulWidget {
     super.key,
     this.onSaved,
     required this.labelText,
+    this.validator,
     this.initialValue,
     this.focusNode,
-    this.validator,
     this.filled = false,
+    this.controller,
   });
 
   @override
@@ -43,6 +46,7 @@ class _AppPasswordFieldState extends State<AppPasswordField> {
   Widget build(BuildContext context) {
     return AppTextField(
       // filled: widget.filled,
+      controller: widget.controller,
       textAlign: TextAlign.left,
       textDirection: TextDirection.ltr,
       focusNode: widget.focusNode,

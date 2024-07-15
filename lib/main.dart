@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'features/authentication/register/screens/regiser_screen.dart';
+import 'common/app_colors.dart';
+import 'features/authentication/login/screens/login_screen.dart';
+import 'features/countries/screens/countries_screen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,18 +22,27 @@ class MyApp extends StatelessWidget {
         designSize: const Size(375, 812),
         minTextAdapt: true,
         splitScreenMode: true,
-        // Use builder only if you need to use library outside ScreenUtilInit context
         builder: (_, child) {
           return MaterialApp(
             title: 'Flutter Demo',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
+              buttonTheme: const ButtonThemeData(
+                buttonColor: AppColors.primary,
+                textTheme: ButtonTextTheme.primary,
+              ),
+              primaryColor: AppColors.primary,
+              unselectedWidgetColor: AppColors.grey300,
               fontFamily: 'Montserrat',
               scaffoldBackgroundColor: Colors.white,
               appBarTheme: const AppBarTheme(color: Colors.white),
               useMaterial3: true,
+              colorScheme: ColorScheme.fromSwatch().copyWith(
+                secondary: Colors.white,
+                primary: const Color(0xff1DBF73),
+              ),
             ),
-            home: const RegisterScreen(),
+            home: const LoginScreen(),
           );
         });
   }

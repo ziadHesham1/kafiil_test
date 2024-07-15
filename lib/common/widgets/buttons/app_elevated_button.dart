@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../app_colors.dart';
+import '../../app_colors.dart';
 
 class AppElevatedButton extends StatelessWidget {
   final Function()? onPressed;
@@ -22,7 +22,7 @@ class AppElevatedButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: AppColors.primary,
         minimumSize: getButtonSize(),
       ),
       child: Text(

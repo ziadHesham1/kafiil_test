@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../common/app_colors.dart';
+import '../app_colors.dart';
 
 class RadioButtonGroup extends StatefulWidget {
   final List<String> options;
@@ -33,10 +34,13 @@ class _RadioButtonGroupState extends State<RadioButtonGroup> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (widget.labelText != null)
-          Text(
-            widget.labelText!,
-            style: const TextStyle(
-              color: AppColors.grey500,
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.h),
+            child: Text(
+              widget.labelText!,
+              style: const TextStyle(
+                color: AppColors.grey500,
+              ),
             ),
           ),
         Row(
@@ -45,6 +49,11 @@ class _RadioButtonGroupState extends State<RadioButtonGroup> {
             return Row(
               children: [
                 Radio<String>(
+                  fillColor: WidgetStateColor.resolveWith(
+                    (states) => selectedIndex == entry.value
+                        ? AppColors.primary
+                        : AppColors.grey300,
+                  ),
                   value: entry.value,
                   groupValue: selectedIndex,
                   onChanged: (value) {

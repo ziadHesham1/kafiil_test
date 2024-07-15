@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../app_colors.dart';
+import '../../app_colors.dart';
 
 class AppCheckbox extends StatefulWidget {
   final String label;
@@ -31,7 +31,7 @@ class _AppCheckboxState extends State<AppCheckbox> {
               widget.onChanged(isSelected);
             }
           },
-          activeColor: AppColors.primaryColor,
+          activeColor: AppColors.primary,
           shape: ContinuousRectangleBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(6.r),

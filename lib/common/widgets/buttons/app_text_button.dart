@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../app_colors.dart';
+import '../../app_colors.dart';
 
 class AppTextButton extends StatelessWidget {
   final Function()? onPressed;
@@ -37,9 +37,8 @@ class AppTextButton extends StatelessWidget {
             style: TextStyle(
               fontSize: (leadingText != null) ? 14.sp : 12.sp,
               fontWeight: (leadingText != null) ? FontWeight.w500 : null,
-              color: (leadingText != null)
-                  ? AppColors.primaryColor
-                  : AppColors.grey500,
+              color:
+                  (leadingText != null) ? AppColors.primary : AppColors.grey500,
             ),
           ),
         ],

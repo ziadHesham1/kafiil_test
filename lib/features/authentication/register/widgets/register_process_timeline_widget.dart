@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:kafiil_test/common/app_colors.dart';
 import 'package:timelines/timelines.dart';
+
+import '../../../../common/app_colors.dart';
+
+enum ProcessStatus { none, before, current, after }
 
 class RegisterProcessWidget extends StatelessWidget {
   final int processIndex;
@@ -14,7 +17,19 @@ class RegisterProcessWidget extends StatelessWidget {
     if (index > processIndex) {
       return AppColors.grey200;
     } else {
-      return AppColors.primaryColor;
+      return AppColors.primary;
+    }
+  }
+
+  ProcessStatus getCurrentStatus(index) {
+    if (index == 0 || index == processList.length - 1) {
+      return ProcessStatus.none;
+    } else if (index == processIndex) {
+      return ProcessStatus.after;
+    } else if (index == processIndex + 1) {
+      return ProcessStatus.current;
+    } else {
+      return ProcessStatus.before;
     }
   }
 
@@ -36,16 +51,38 @@ class RegisterProcessWidget extends StatelessWidget {
       ),
       builder: TimelineTileBuilder.connected(
         connectionDirection: ConnectionDirection.after,
-        oppositeContentsBuilder: oppositeContentsBuilder,
-        contentsBuilder: (context, index) => const SizedBox.shrink(),
-        indicatorBuilder: indicatorBuilder,
-        connectorBuilder: connectorBuilder,
+        oppositeContentsBuilder: (context, index) {
+          if (getCurrentStatus(index) == ProcessStatus.none) {
+            return const SizedBox(width: 40);
+          } else {
+            return contentWidget(
+              processList,
+              index,
+            );
+          }
+        },
+        indicatorBuilder: (_, index) {
+          ProcessStatus status = getCurrentStatus(index);
+          if (status == ProcessStatus.none) {
+            return null;
+          } else if (status == ProcessStatus.after) {
+            return checkedConnector(index);
+          } else if (status == ProcessStatus.current) {
+            return currentConnector(index);
+          } else {
+            return beforeConnector(index);
+          }
+        },
+        connectorBuilder:
+            (BuildContext context, int index, ConnectorType type) {
+          return SolidLineConnector(color: getColor(index));
+        },
         itemCount: processList.length,
       ),
     );
   }
 
-  Widget contentWidget(list, index, {isOpposite = false}) {
+  Widget contentWidget(list, index) {
     return Container(
       alignment: Alignment.center,
       width: 140.w,
@@ -54,7 +91,9 @@ class RegisterProcessWidget extends StatelessWidget {
         list[index],
         textAlign: TextAlign.center,
         style: TextStyle(
-          color: AppColors.primaryColor,
+          color: getCurrentStatus(index) == ProcessStatus.before
+              ? AppColors.grey300
+              : AppColors.primary,
           fontSize: 12.sp,
           fontWeight: FontWeight.w600,
         ),
@@ -62,36 +101,19 @@ class RegisterProcessWidget extends StatelessWidget {
     );
   }
 
-  Widget? oppositeContentsBuilder(context, index) {
-    if (index == 0 || index == processList.length - 1) {
-      return const SizedBox(
-        width: 40,
-      );
-    } else {
-      return contentWidget(
-        processList,
-        index,
-        isOpposite: true,
-      );
-    }
+  Container beforeConnector(index) {
+    return Container(
+      width: 25.w,
+      height: 25.h,
+      alignment: Alignment.center,
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: AppColors.grey200,
+      ),
+    );
   }
 
-  Widget? connectorBuilder(
-      BuildContext context, int index, ConnectorType type) {
-    return SolidLineConnector(color: getColor(index));
-  }
-
-  Widget? indicatorBuilder(_, index) {
-    if (index == 0 || index == processList.length - 1) {
-      return null;
-    } else if (index > processIndex) {
-      return uncheckedConnector(index);
-    } else {
-      return checkedConnector(index);
-    }
-  }
-
-  Container uncheckedConnector(index) {
+  Container currentConnector(index) {
     return Container(
       width: 25.w,
       height: 25.h,
@@ -104,7 +126,7 @@ class RegisterProcessWidget extends StatelessWidget {
       ),
       child: Text(
         index.toString(),
-        style: const TextStyle(color: AppColors.primaryColor),
+        style: const TextStyle(color: AppColors.primary),
       ),
     );
   }
@@ -116,7 +138,7 @@ class RegisterProcessWidget extends StatelessWidget {
         alignment: Alignment.center,
         decoration: const BoxDecoration(
           shape: BoxShape.circle,
-          color: AppColors.primaryColor,
+          color: AppColors.primary,
         ),
         child: Icon(
           Icons.done,

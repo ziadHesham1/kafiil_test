@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../app_colors.dart';
+import '../../app_colors.dart';
 
 class AppTextField extends StatelessWidget {
   final String? labelText;
@@ -10,9 +10,9 @@ class AppTextField extends StatelessWidget {
   final double? width;
   final String? initialValue;
   final int maxLines;
-
   final Function(String?)? onSaved;
   final Function(String)? onChanged;
+  final Function(String)? onSubmit;
   final Function()? onTap;
   final Function(String?)? onFieldSubmitted;
   final void Function()? onEditingComplete;
@@ -25,7 +25,6 @@ class AppTextField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
   final TextCapitalization textCapitalization;
-
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final TextAlign? textAlign;
@@ -41,7 +40,6 @@ class AppTextField extends StatelessWidget {
     this.isObscureText = false,
     this.suffixIcon,
     this.keyboardType,
-    this.onChanged,
     this.textCapitalization = TextCapitalization.none,
     this.initialValue,
     this.maxLines = 1,
@@ -58,6 +56,8 @@ class AppTextField extends StatelessWidget {
     this.onTap,
     this.hintText,
     this.isRequired = true,
+    this.onChanged,
+    this.onSubmit,
   });
 
   OutlineInputBorder buildBorder({Color? color}) {
@@ -89,11 +89,11 @@ class AppTextField extends StatelessWidget {
       focusColor: AppColors.white,
       alignLabelWithHint: true,
       prefixIcon: prefixIcon,
-      prefixIconColor: AppColors.primaryColor,
+      prefixIconColor: AppColors.primary,
       errorMaxLines: 5,
-      contentPadding: EdgeInsets.symmetric(horizontal: 6.w),
+      contentPadding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 14.h),
       suffixIcon: suffixIcon,
-      suffixIconColor: AppColors.primaryColor,
+      suffixIconColor: AppColors.primary,
       border: hasBorder ? buildBorder() : null,
       enabledBorder: hasBorder ? buildBorder() : null,
       focusedBorder: hasBorder ? buildBorder() : null,
@@ -107,14 +107,17 @@ class AppTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (labelText != null)
-          Text(
-            labelText!,
-            style: const TextStyle(
-              color: AppColors.grey500,
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 8.h),
+            child: Text(
+              labelText!,
+              style: const TextStyle(
+                color: AppColors.grey500,
+              ),
             ),
           ),
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 8.h),
+        SizedBox(
+          width: width,
           child: TextFormField(
             selectionHeightStyle: BoxHeightStyle.max,
             onTap: onTap,
